@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/style.css"
+        </head>
+        <body> <center>
+            <div id=-"topmenu">
+                <a href="/"><button type='button'>Home<button></a>
+                <a href="/profile-list">Recently Updated Profiles</a>
+                {% if login_url %}
+                <a href="{{login_url}}"> Login </a>
+                   {% else %}
+                <a href='{{logout_url}}'> Logout </a>
+                <a href='/profile-edit'> Edit Profile </a>
+                    {% endif %}
+         </div>
+         {% if successmsg %}
+         <div id="successmsg">{{successmsg}}</div>
+         {% endif %}
+         {% if errormsg %}
+        <div id="errormsg">{{errormsg}}</div>  
+        {% endif %}         
+                    {%block content%}{% endblock %}
+</body> <center>
+    </html>
