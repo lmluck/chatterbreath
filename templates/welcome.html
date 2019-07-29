@@ -1,11 +1,10 @@
 <html>
     <head>
-        <link rel="stylesheet" href="../static/style.css"
+        <link rel="stylesheet" href="../static/welcomestyle.css"
         </head>
         <body> <center>
-            <div id=-"topmenu">
-                <a href="/"><button type='button'>Home<button></a>
-                <a href="/profile-list">Recently Updated Profiles</a>
+            <div id=-"menu" class="click">
+                <a href="/"><button type='button'> <img src="http://www.clker.com/cliparts/7/5/8/P/c/o/simple-grey-house-hi.png" alt='home'>Home<button></a>
                 {% if login_url %}
                 <a href="{{login_url}}"> Login </a>
                    {% else %}

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/profilestyle.css"
+        </head>
+        <body>
+            <div id=-"topmenu">
+                <a href="/"><button type='submit' id="home-button" value="home" ></button></a>
+                {% if logout_url == null %}
+                <a href="{{login_url}}"><button > Login </button> </a>
+                   {% else %}
+                <a href='{{logout_url}}'><button>Logout </button></a>
+                <a href='/profile-edit'><button> Edit Profile </button> </a>
+                    {% endif %}
+         </div>
+         {% if successmsg %}
+         <div id="successmsg">{{successmsg}}</div>
+         {% endif %}
+         {% if errormsg %}
+        <div id="errormsg">{{errormsg}}</div>  
+        {% endif %}         
+                    {%block content%}{% endblock %}
+         <h1>{{name}}</h1>
+         <img src={{profilepicture}} alt={{name}}>
+         {{preferences}}
+
+</body>
+    </html>
