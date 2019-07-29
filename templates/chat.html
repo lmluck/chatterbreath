@@ -1,0 +1,28 @@
+<html>
+    <style>
+        p{
+            color:white;
+        }
+    </style>
+    <body>
+        
+        {% for message in messages %}
+        <p>
+            <b>{{message.timestamp}}</b> {{message.text}}
+        </p>
+        
+        {% endfor %}
+    </body>
+</html>
+
+<!-- <style>
+            iframe{
+                background-color:skyblue;
+                width:500px;
+            }
+        </style>
+        <iframe src="/chat"></iframe>
+
+        <form method="post" action="/send">
+            <input type ="text" name ="chatmsg"> <input type="submit">
+            </form -->
