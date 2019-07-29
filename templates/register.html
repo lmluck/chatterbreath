@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/registerstyle.css">
+    </head>
+    <body> <center>
+        <form method="post" action="login.html">
+            <div class="container">
+                <h1>Register</h1>
+                <hr>
+
+                <label for="firstname"><b>First Name</b></label>
+                <input type="text" name="firstname" required>
+
+                <label for="lastname"><b>Last Name</b></label>
+                <input type="text" name="lastname" required>
+
+                <label for="password"><b>Password</b></label>
+                <input type="password" name="password" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" name="email" required>
+
+                <form>
+                    <select name="neighborhoods">
+                        {% for neighborhood in neighborhoods %}
+                        <option>{{neighborhood}}</option>
+                    </select>
+                </form>
+                
+                <button type="submit" class="registerbtn">Register</button>
+            </div>
+
+            <div class="container signin">
+                <p>Already have an account? <a href="/login.html">Sign in</a>.</p>
+            </div>
+</form>
+    </body> </center>
+</html>
