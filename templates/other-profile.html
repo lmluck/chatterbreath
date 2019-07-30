@@ -4,14 +4,41 @@
             body{
                 background-color:#aaff00;
             }
+            img{
+                width:25%;
+                margin-left:0%;
+            }
+            button {
+  background-color: black; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+font-family: 'Maven Pro', sans-serif;
+font-style: normal;
+font-weight: 300;
+/* margin-right: 90px; */
+width: 300px;
+
+}
+
+button:hover {
+    background-color:#FF70CB;
+     color: white;
+}
         </style>
     </head>
     <body>
         <h1> Other Profile<h1> 
             <div>
+                <img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"><br>
                 {{Profile_pic}}
             </div>
         <h3>Preferences Shared<h3>
+        <h4> You have {{shared-preerences}} shared preference(s)    
             <li>{{item1}}</li>
             <li>{{item2}}</li>
             <li>{{item3}}</li>
@@ -19,7 +46,7 @@
             <li>{{item3}}</li>
         <!-- -----etc----- -->
         <a href="/chatpage"><button > Chat </button> </a>
-
+        <a href="/main"><button><Back></button><a>
 <!-- -------------REPLACE WITH A VARIABLE OF THE OTHER USER NAME  -->
     </body>
 </html>
