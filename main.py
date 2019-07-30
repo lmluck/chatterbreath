@@ -80,8 +80,6 @@ class ProfileEditHandler(webapp2.RequestHandler):
    def get(self):
        email =  get_user_email()
        profile = socialdata.get_user_profile(email) #if no email then this function returns null
-       print 'editing preferences:'
-       print profile.preferences
 
        values = get_template_parameters()
        values['name'] = 'Unkown'
