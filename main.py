@@ -1,6 +1,7 @@
 import os
 import socialdata
 import webapp2
+import datetime
  
 from google.appengine.api import users 
 from google.appengine.ext.webapp import template
@@ -88,10 +89,64 @@ class UserViewHandler(webapp2.RequestHandler):
         render_template(self, 'profilebase.html', values)
 
 
+
+
+# -----------------CHAT---------------------
+
+messages = []
+class ChatHandler(webapp2. RequestHandler):
+    def get(self):
+        values = {
+            'messages': messages
+        }
+        render_template(self, 'chatpage.html', values)
+    def post(self):
+        values = {
+            'messages': messages
+        }
+        render_template(self, 'chatpage.html', values)
+ 
+class ChatDisplayHandler(webapp2. RequestHandler):
+    def get(self):
+        values = {
+            'messages': messages
+        }
+        render_template(self, 'chat.html', values)
+    def post(self):
+        values = {
+            'messages': messages
+        }
+        render_template(self, 'chat.html', values)      
+
+class Message():
+    def __init__(self,timestamp,text):
+        self.timestamp = timestamp
+        self.text = text
+class SendHandler(webapp2.RequestHandler):
+    def post(self):
+        chat_message = self.request.get('chatmsg')
+        if len(chat_message) > 4000:
+            self.response.out.write("That message is too long")
+        else:
+           timestamp = datetime.datetime.now()
+           message = Message(timestamp,chat_message)
+           messages.append(message)
+           while len(messages ) > 50:
+              messages.pop(0)
+        
+           self.redirect('/chatpage')
+class PrintMessagesHandler(webapp2.RequestHandler):
+    def get(self):
+        print messages
+
 app = webapp2.WSGIApplication([
     # ('/profile-list', ProfileListHandler),
     # ('/p/(.*)', ProfileViewHandler),
     # ('/profile-save', ProfileSaveHandler),
+    ('/chatdisplay', ChatDisplayHandler),
+    ('/chatpage', ChatHandler),
+    ('/print',PrintMessagesHandler),
+    ('/send',SendHandler),
     ('/profile-edit', ProfileViewHandler),
     ('/profile-user', UserViewHandler),
     ('.*', MainHandler) #this maps the root url to the Main Page Handler
