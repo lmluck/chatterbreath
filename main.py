@@ -44,7 +44,7 @@ class ProfileSaveHandler (webapp2.RequestHandler):
         else:
             error_text = ''
             name = self.request.get('name')
-            description = self.request.get('description')
+            preferences = self.request.get('preferences')
 
             if len(name) < 2:
                 error_text += "Name should be at least 2 characters. \n"
@@ -52,34 +52,36 @@ class ProfileSaveHandler (webapp2.RequestHandler):
                 error_text += "Name should be no more than 20 characters. \n"    
             if len(name.split()) > 1:
                 error_text += "Name should not have whitespace. \n"  
-            if len(description) > 4000:
+            if len(preferences) > 4000:
                 error_text += "Description should be less than 4000 characters. \n"
-            for word in description.split():
+            for word in preferences.split():
                 if len(word) > 50:
                     error_text += "Description contas words that are too damned long. \n"       
                     break
 
             values = get_template_parameters()
             values['name'] = name
-            values['description'] = description
+            values['preferences'] = preferences
             if error_text:
                 values['errormsg'] = error_text
 
             else:
-                socialdata.save_profile(email, name, description)
+                socialdata.save_profile(email, name, preferences)
                 values['successmsg'] = 'Everything worked out fine'
             render_template(self, 'profile-edit.html', values) 
 
-class ProfileViewHandler(webapp2.RequestHandler):
-    def get(self, profilename):
-        profile = socialdata.get_profile_by_name(profilename)
-        values = get_template_parameters()
-        values['name'] = 'Uknown'
-        values['description'] = 'Profile does not exist'
-        if profile:
-            values['name'] = profile.name
-            values['description'] = profile.description
-        render_template(self, 'profile-view.html', values)
+class ProfileEditHandler(webapp2.RequestHandler):
+   def get(self):
+       email =  get_user_email()
+       profile = socialdata.get_user_profile(email) #if no email then this function returns null
+       values = get_template_parameters()
+       values['name'] = 'Unkown'
+       values['preferences'] = 'Profile does not exist'
+       if profile:
+           values['name'] = profile.name
+           values['preferences'] = profile.preferences
+       render_template(self, 'profile-edit.html', values)
+
 
 class UserViewHandler(webapp2.RequestHandler):
     def get(self):
@@ -142,12 +144,12 @@ class PrintMessagesHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     # ('/profile-list', ProfileListHandler),
     # ('/p/(.*)', ProfileViewHandler),
-    # ('/profile-save', ProfileSaveHandler),
+    ('/profile-save', ProfileSaveHandler),
     ('/chatdisplay', ChatDisplayHandler),
     ('/chatpage', ChatHandler),
     ('/print',PrintMessagesHandler),
     ('/send',SendHandler),
-    ('/profile-edit', ProfileViewHandler),
+    ('/profile-edit', ProfileEditHandler),
     ('/profile-user', UserViewHandler),
     ('.*', MainHandler) #this maps the root url to the Main Page Handler
 ])
