@@ -1,15 +1,18 @@
 <html>
     <head>
-        <link rel="stylesheet" href="../static/welcomestyle.css"
+        <link rel="stylesheet" href="/i/welcomestyle.css">
+  <link href="https://fonts.googleapis.com/css?family=Maven+Pro:900&display=swap" rel="stylesheet">  
         </head>
-        <body> <center>
-            <div id=-"menu" class="click">
-                <a href="/"><button type='button'> <img src="http://www.clker.com/cliparts/7/5/8/P/c/o/simple-grey-house-hi.png" alt='home'>Home<button></a>
-                {% if login_url %}
-                <a href="{{login_url}}"> Login </a>
+        <body>
+             <center>
+            <img src='/i/logo.png' alt=logo>
+                <div id="menu" class="click">
+                <a href="/profile-register"><button type='submit' id="home-button" value="home" > Register </button></a>
+                {% if logout_url == null %}
+                <a href="{{login_url}}"><button > Login </button> </a>
                    {% else %}
-                <a href='{{logout_url}}'> Logout </a>
-                <a href='/profile-edit'> Edit Profile </a>
+                <a href='{{logout_url}}'><button>Logout </button></a>
+                <a href='/profile-edit'><button> Edit Profile </button> </a>
                     {% endif %}
          </div>
          {% if successmsg %}
@@ -17,7 +20,7 @@
          {% endif %}
          {% if errormsg %}
         <div id="errormsg">{{errormsg}}</div>  
-        {% endif %}         
+        {% endif %}          
                     {%block content%}{% endblock %}
-</body> <center>
+</body> </center>
     </html>
