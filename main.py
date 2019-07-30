@@ -7,6 +7,18 @@ from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
+PREFERENCES = [
+    'Football', 
+    'Basketball', 
+    'Soccer', 
+    'Baseball',
+    'Fashion',
+    'Movies',
+    'Video Games',
+    'Swimming',
+]
+
+
 def render_template(handler, file_name, template_values):
     path = os.path.join(os.path.dirname(__file__), 'templates/'+ file_name)
     handler.response.out.write(template.render(path, template_values))
@@ -44,7 +56,9 @@ class ProfileSaveHandler (webapp2.RequestHandler):
         else:
             error_text = ''
             name = self.request.get('name')
-            preferences = self.request.get('preferences')
+            preferences = self.request.get('preferences', allow_multiple=True)
+            print 'Preferences: ' 
+            print preferences
 
             if len(name) < 2:
                 error_text += "Name should be at least 2 characters. \n"
@@ -52,34 +66,31 @@ class ProfileSaveHandler (webapp2.RequestHandler):
                 error_text += "Name should be no more than 20 characters. \n"    
             if len(name.split()) > 1:
                 error_text += "Name should not have whitespace. \n"  
-            if len(preferences) > 4000:
-                error_text += "Description should be less than 4000 characters. \n"
-            for word in preferences.split():
-                if len(word) > 50:
-                    error_text += "Description contas words that are too damned long. \n"       
-                    break
-
             values = get_template_parameters()
-            values['name'] = name
-            values['preferences'] = preferences
+            values['name'] = "Joe"
             if error_text:
                 values['errormsg'] = error_text
 
             else:
                 socialdata.save_profile(email, name, preferences)
                 values['successmsg'] = 'Everything worked out fine'
-            render_template(self, 'profile-edit.html', values) 
+            self.redirect('/profile-edit')
 
 class ProfileEditHandler(webapp2.RequestHandler):
    def get(self):
        email =  get_user_email()
        profile = socialdata.get_user_profile(email) #if no email then this function returns null
+       print 'editing preferences:'
+       print profile.preferences
+
        values = get_template_parameters()
        values['name'] = 'Unkown'
-       values['preferences'] = 'Profile does not exist'
+
+       values['preferences'] = PREFERENCES
        if profile:
            values['name'] = profile.name
-           values['preferences'] = profile.preferences
+           values['userpreferences'] = profile.preferences
+           
        render_template(self, 'profile-edit.html', values)
 
 
@@ -90,7 +101,12 @@ class UserViewHandler(webapp2.RequestHandler):
         values['profiles'] = profiles
         render_template(self, 'profilebase.html', values)
 
-
+class PreferencesHandler(webapp2.RequestHandler):
+    def get(self):
+        values = get_template_parameters()
+        values['name'] = 'Unkown'
+        values['preferences'] = 'Profile does not exist'
+        render_template(self, 'preferences.html', values)
 
 
 # -----------------CHAT---------------------
@@ -146,6 +162,7 @@ app = webapp2.WSGIApplication([
     # ('/p/(.*)', ProfileViewHandler),
     ('/profile-save', ProfileSaveHandler),
     ('/chatdisplay', ChatDisplayHandler),
+    ('/preferences', PreferencesHandler),
     ('/chatpage', ChatHandler),
     ('/print',PrintMessagesHandler),
     ('/send',SendHandler),

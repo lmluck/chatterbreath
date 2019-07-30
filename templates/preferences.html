@@ -6,15 +6,14 @@
 <h1>Preferences</h1>
 <br><br></div >What do you want to chat about?</div><br>
 <div class="preferences">
-    <form method="post" action="{{submit_preferences_url}}>
-        <input type="checkbox" name="Football" value="Football">Football<br>
-        <input type="checkbox" name="Basketball" value="Basketball">Basketball<br>
-        <input type="checkbox" name="Soccer" value="Soccer">Soccer<br>
-        <input type="checkbox" name="Baseball" value="Baseball">Baseball<br>
-        <input type="checkbox" name="Fashion" value="Fashion">Fashion<br>
-        <input type="checkbox" name="Movies" value="Movies">Movies<br>
-        <input type="checkbox" name="Video Games" value="Video Games">Video Games<br>
-        <input type="submit" value="Submit">
+    <form method="post" action="/profile-save">
+        <input type="checkbox" value="{{preferences}}" name="preferences">Football<br>
+        <input type="checkbox" value="{{preferences}}" name="preferences">Basketball<br>
+        <input type="checkbox" value="{{preferences}}" name="preferences">Soccer<br>
+        <input type="checkbox" value="{{preferences}}" name="preferences">Baseball<br>
+        <input type="checkbox" value="{{preferences}}" name="perfences">Fashion<br>
+        <input type="checkbox" value="{{preferences}}" name="preferences">Movies<br>
+        <input type="checkbox" value="{{preferences}}" name="preferences">Video Games<br>
 </div>
     </form>
     </body>

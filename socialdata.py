@@ -1,12 +1,15 @@
 from socialmodels import UserProfile
 
-def save_profile(email, name, description):
+def save_profile(email, name, preferences):
     p = get_user_profile(email)
     if p:
         p.name = name
-        p.description = description
+        if preferences:
+            p.preferences = preferences
+        else:
+            p.preferences = []
     else:
-        p = UserProfile(email=email, name=name, description=description)
+        p = UserProfile(email=email, name=name, preferences=preferences)
     p.put()
 
 def get_user_profile(email):
@@ -24,5 +27,5 @@ def get_profile_by_name(name):
     return None
 
 def get_recent_profiles():
-    g = UserProfile.query().order(-UserProfile.last_update)
+    q = UserProfile.query().order(-UserProfile.last_update)
     return q.fetch(50)

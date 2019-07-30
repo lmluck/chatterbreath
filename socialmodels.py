@@ -3,6 +3,6 @@ from google.appengine.ext import ndb
 class UserProfile(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-    preferences = ndb.TextProperty()
+    preferences = ndb.StringProperty(repeated=True)
     description = ndb.TextProperty()
     last_update = ndb.DateTimeProperty(auto_now=True)
