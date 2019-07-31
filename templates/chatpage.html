@@ -1,11 +1,19 @@
 <html>
     <head>
         <style>
+            input{
+                background-color:silver;
+                opacity:0.7;
+            }
+            body{
+                background-color:#aaff00;
+            }
               p{
             color:black;
         }
             iframe{
-                background-color:skyblue;
+                background-color:silver;
+                opacity:0.7;
                 width:500px;
             }
 
@@ -33,17 +41,17 @@ button:hover {
    </style>
    </head>
     <body>
-        
-        <form method="post" action="/send">
-            <input type ="text" name ="chatmsg"> <input type="submit">
-        </form>
+        <h1>Chatting with {{other_profile}}
+       
     </body>
         <iframe src="/chatdisplay"></iframe>
-  <div id="menu" class="click">
-                <a href="/"><button type='submit' id="home-button" value="home" > Home </button></a>
+  
+     <form method="post" action="/send">
+            <input type ="text" name ="chatmsg"> <input type="submit">
+        </form>
+    <div id="menu" class="click">
+                <a href="/"><button type='submit' id="home-button" value="home" > Home </button></a> 
                 <a href="/chatpage"><button > Chat </button> </a>
                 <a href='/profile-edit'><button>  Profile </button> </a>
          </div>        
-    
-    
 </html>
