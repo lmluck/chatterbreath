@@ -34,13 +34,24 @@ def get_user_matches(email):
     return matching_profiles
 
 def get_user_compatibilities(email): #returns a list sorted by the level of prefence compatibilities
-    compatibilities = {}
+    compatibilities = []
+    current_profile = get_user_profile(email)
     matches = get_user_matches(email)
     for profile in matches: 
         compatibility_score = len ([e for e in profile.preferences if e in current_profile.preferences])
-        compatibilities[profile] = compatibility_score 
-    list = sorted (compatibilities.items(), key = lambda x: x[1], reverse = True)    
+        compatibilities.append((profile, compatibility_score))
+        print profile.name
+    list = sorted (compatibilities, key = lambda x: x[1], reverse = True)
+    profiles = []
+    for profile, score in list:
+        profiles.append(profile)
+        print profile.email
+    return profiles
 
+
+
+#  def get_relevant_profiles():   
+#      relevant = get_user_compatibilities
 
 def get_profile_by_name(name):
     q = UserProfile.query(UserProfile.name==name)

@@ -103,6 +103,17 @@ class UserViewHandler(webapp2.RequestHandler):
         values['profiles'] = profiles
         render_template(self, 'profilebase.html', values)
 
+class ChattiesListHandler(webapp2.RequestHandler):
+    def get(self):
+        profiles = socialdata.get_user_compatibilities(get_user_email())
+        display_pref = []
+        all_lists = [profile.preferences for profile in profiles]
+        for list in all_lists:
+            display_pref.append([str(pref) for pref in list])
+        values = get_template_parameters()
+        values['profiles'] = zip([profile.name for profile in profiles], display_pref)
+        render_template(self, 'chatties_list.html', values)
+
 class PreferencesHandler(webapp2.RequestHandler):
     def get(self):
         values = get_template_parameters()
@@ -162,6 +173,7 @@ class PrintMessagesHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     # ('/profile-list', ProfileListHandler),
     # ('/p/(.*)', ProfileViewHandler),
+    ('/chatties-list', ChattiesListHandler),
     ('/profile-save', ProfileSaveHandler),
     ('/chatdisplay', ChatDisplayHandler),
     ('/preferences', PreferencesHandler),

@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/i/profile-edit.css">
+    </head>
+    <body>
+                <h1> Your Chatties </h1>
+                <div class="preferences">
+                    {% for name, preferences in profiles %}
+                    <p>{{name}} : {{preferences}} </p>
+                    {% endfor %}
+        <input type="submit" >       
+                </div>
+        </div >
+     
+    </body>
+</html>    
