@@ -2,6 +2,7 @@ import os
 import socialdata
 import webapp2
 import datetime
+import neighborhoods
  
 from google.appengine.api import users 
 from google.appengine.ext.webapp import template
@@ -57,8 +58,11 @@ class ProfileSaveHandler (webapp2.RequestHandler):
             error_text = ''
             name = self.request.get('name')
             preferences = self.request.get('preferences', allow_multiple=True)
-            print 'Preferences: ' 
+            neighborhood = self. request.get('neighborhood')
+            print 'Preferences: '
             print preferences
+            print 'Neighborhood: '
+            print neighborhood
 
             if len(name) < 2:
                 error_text += "Name should be at least 2 characters. \n"
@@ -72,7 +76,7 @@ class ProfileSaveHandler (webapp2.RequestHandler):
                 values['errormsg'] = error_text
 
             else:
-                socialdata.save_profile(email, name, preferences)
+                socialdata.save_profile(email, name, preferences, neighborhood)
                 values['successmsg'] = 'Everything worked out fine'
             self.redirect('/profile-edit')
 
@@ -83,12 +87,12 @@ class ProfileEditHandler(webapp2.RequestHandler):
 
        values = get_template_parameters()
        values['name'] = 'Unkown'
-
        values['preferences'] = PREFERENCES
+       values['neighborhood_options'] = neighborhoods.neighborhoods
        if profile:
            values['name'] = profile.name
            values['userpreferences'] = profile.preferences
-           
+           values['neighborhood'] = profile.neighborhood
        render_template(self, 'profile-edit.html', values)
 
 

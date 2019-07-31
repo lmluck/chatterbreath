@@ -1,16 +1,28 @@
-
-
-<form method='post' action="/profile-save"> 
-<fieldset>
-    Name: <br><input type = "text" name="name" value='{{name}}'><br><br>
-    Preferences: <br>
+<html>
+    <head>
+        <link rel="stylesheet" href="/i/profile-edit.css">
+        </head>
+<form id="profile" method='post' action="/profile-save"> 
+<div class: "editor">
+    <h1>Name: </h1><br><input type = "text" name="name" value='{{name}}'><br>
+    <h1>What neighborhood do you live in?: </h1>
+    <div class="neighborhoods">
+         
+        <select name="neighborhood">
+    {% for neighborhood in neighborhood_options %}
+        <option value="{{neighborhood}}" name="neighborhood">{{neighborhood}}</option>
+    {% endfor %}
+    </select>
+   
+     <br>
     <!-- <iframe src="/preferences"></iframe><br> -->
-    <div>What do you want to chat about?</div><br>
+    <div><h1>What do you want to chat about?<h1></div>
 <div class="preferences">
     {% for preference in preferences %}
-    <input type="checkbox" value="{{preference}}" name="preferences" {% if preference in userpreferences %}checked{% endif %}>{{preference}}<br>
+    <label class= "container"><input type="checkbox" value="{{preference}}" name="preferences" {% if preference in userpreferences %}checked{% endif %}>{{preference}}<span class="checkmark"></span></label><br>
     {% endfor %}
    <input type="submit" >       
 </div>
-</fieldset>
+</div >
     </form>
+</html>    
