@@ -34,3 +34,52 @@ width: 300px;
 #main:hover{
     background-color:#FF70CB;
 }
+* {box-sizing: border-box;}
+.header {
+  overflow: hidden;
+  /* padding: 0px 0px; */
+/* padding: 20px 10px; */
+  background-color:#8bd100;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #FF70CB;
+  color: black;
+}
+
+.header a.active {
+  background-color: #FF70CB;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
