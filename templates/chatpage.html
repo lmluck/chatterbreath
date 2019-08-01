@@ -5,14 +5,15 @@
     </head>
     <body> 
     <center>
-    <h1>Chatting with {{other_profile}} </h1>
+    <h1>Chatting with {{matched_user}} </h1>
     <br>
 
-    <iframe src="/chatdisplay" width="1000" height="300"></iframe>
+    <iframe src="/chatdisplay/{{namepair}}" width="1000" height="300"></iframe>
 
     <form method="post" action="/send">
         <br>
         <input type ="text" name ="chatmsg"> 
+        <input type = "hidden" name="matched_user" value="{{matched_user}}">
         <input type="submit">
     </form>
     <br>

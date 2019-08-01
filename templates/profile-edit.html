@@ -19,7 +19,7 @@
                 <input id="file" type="file" name="profile_picture" accept="image/*">
                 <h1>What neighborhood do you live in? </h1>
                 <form>
-                    <select name="neighborhood" id="dropdown">
+                    <select name="neighborhood" id="dropdown" class="dropdown">
                     {% for neighborhood in neighborhood_options %}
                     <option>{{neighborhood}}</option>
                     {% endfor %}

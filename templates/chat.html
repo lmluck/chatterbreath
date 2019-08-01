@@ -5,12 +5,14 @@
         }
     </style>
     <body>
-        
         {% for message in messages %}
+        {% if message.sender in listnames %}
+         {% if message.recipient in listnames %}
         <p>
-            <b>{{firstname}}-{{message.timestamp}}</b> {{message.text}}
+            <b>{{message.sender}}-{{message.timestamp}}</b> {{message.text}}
         </p>
-        
+        {% endif %}
+        {% endif %}
         {% endfor %}
     </body>
 </html>
