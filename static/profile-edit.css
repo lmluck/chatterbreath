@@ -118,3 +118,47 @@ input[type=text] {
 #file {
     height: 30px;
 }
+
+
+ * {box-sizing: border-box;}
+.header {
+  overflow: hidden;
+  /* padding: 0px 0px; */
+/* padding: 20px 10px; */
+  background-color:#8bd100;
+  font-size: 16px;
+font-family: 'Maven Pro', sans-serif;
+font-style: normal;
+font-weight: 300;
+  
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #FF70CB;
+  color: black;
+}
+
+.header a.active {
+  background-color: #FF70CB;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
