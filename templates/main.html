@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/i/mainstyle.css">
+    </head>
+    <body>
+        <div id="headers">
+            <div id="preferenceheader"> Preferences </div>
+            <div id="chatterheader">Chatters </div>
+        </div>
+        <div class="lines">
+            <div><hr></div>
+            <div class="vl"></div>
+        </div>
+        <div id="outerdiv">
+            <form id="form">
+                <div class="preferences">
+                    {% for preference in preferences %}
+                    <label class= "container"><input type="checkbox" value="{{preference}}" name="preferences" {% if preference in userpreferences %}checked{% endif %}>{{preference}}<span class="checkmark"></span></label><br>
+                    {% endfor %}    
+                </div>
+                <button class="button "type="reset" value="Reset">Deselect All </button>
+            </form> 
+            <div class="box"> 
+                <span class="circle"></span>
+                <button class="chatbtn">Chat</button>
+            </div>
+            <div class="box"> 
+                <span class="circle"></span>
+                <button class="chatbtn">Chat</button>
+                
+            </div>
+        </div>
+    </body>
+</html>

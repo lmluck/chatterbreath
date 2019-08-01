@@ -1,0 +1,173 @@
+.vl {
+  border-left: 6px solid black;
+  height: 90%;
+  position: absolute;
+  left: 26%;
+  margin-left: -3px;
+  top: 5%;
+  border-radius: 100px;
+}
+
+hr {
+  border-top: 6px solid black;
+  width: 85%;
+  position: absolute;
+  margin-left: 30px;
+  top: 17%;
+  border-radius: 100px;
+}
+
+#preferenceheader {
+    font-size: 500%;
+    float: left;
+    text-align: left;
+    margin-top: 50px;
+    margin-left: 30px;
+}
+
+#chatterheader {
+    font-size: 500%;
+    float: right;
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 50px;
+}
+
+#headers {
+    display: inline-block;
+    max-width: 100%;
+}
+headers div {
+    max-width: 50%;
+}
+
+button:hover {
+    background-color:#FF70CB;
+     color: white;
+}
+
+.container .checkmark:after {
+  left: 50px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #FF70CB;
+}
+
+.container:hover input ~ .checkmark {
+  background-color:#FF70;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 50px;
+  margin-bottom: 5px;
+  width: 10%;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 75px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: black;
+}
+
+.preferences {
+    margin-left: 100px;
+    
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  margin-left: 140px;
+  margin-top: 5px;
+}
+
+.box {
+    border: 3px solid black;
+    width: 1200px;
+    /* float: center; */
+    height: 225px;
+    margin-left: 500px;
+}
+
+#outerdiv {
+    max-width: 100%;
+    display: inline-block;
+}
+
+#outerdiv div {
+    max-width: 50%;
+    margin-top: 50px;
+}
+
+#form {
+    float:left;
+    text-align: left;
+}
+
+.circle {
+    margin-top: 15px;
+    margin-left: 30px;
+    height: 160px;
+    width: 160px;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.chatbtn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 630px;
+    margin-top: 7px;
+    margin-left: 85px;
+}
