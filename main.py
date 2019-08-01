@@ -128,12 +128,11 @@ class UserViewHandler(webapp2.RequestHandler):
 class ChattiesListHandler(webapp2.RequestHandler):
     def get(self):
         profiles = socialdata.get_user_compatibilities(get_user_email())
-        display_pref = []
-        all_lists = [profile.preferences for profile in profiles]
-        for list in all_lists:
-            display_pref.append([str(pref) for pref in list])
         values = get_template_parameters()
-        values['profiles'] = zip([profile.name for profile in profiles], display_pref)
+        user = users.get_current_user()
+        current_user = socialdata.get_user_profile(user.email())
+        values['profiles'] = profiles
+        values['name'] = current_user.name
         render_template(self, 'chatties_list.html', values)
 
 class PreferencesHandler(webapp2.RequestHandler):
@@ -142,27 +141,61 @@ class PreferencesHandler(webapp2.RequestHandler):
         values['name'] = 'Unkown'
         values['preferences'] = 'Profile does not exist'
         render_template(self, 'preferences.html', values)
-
-
+        
+class MainPageHandler(webapp2.RequestHandler):
+    def get(self):
+        #make sure to get user profile so you can get the users name
+        # values['user_name'] = profile.name + ('-')
+        user = users.get_current_user()
+        current_user = socialdata.get_user_profile(user.email())
+        values = {}
+        profiles = socialdata.get_user_compatibilities(get_user_email())
+        display_pref = []
+        all_lists = [person.preferences for person in profiles]
+        for list in all_lists:
+            display_pref.append([str(pref) for pref in list])
+        values = get_template_parameters()
+        name_list = [current_user.name +profile.name for profile in profiles]
+        values['profiles'] = zip([profile.name for profile in profiles], display_pref, name_list)
+        render_template(self, 'main.html', values)
 # -----------------CHAT---------------------
 
 messages = []
+
 class ChatHandler(webapp2. RequestHandler):
-    def get(self):
+    def get(self, namepair):
+        list_names = namepair.split("-")
+        print list_names
         values = {
-            'messages': messages
+            'messages': messages,
+            'listnames': list_names,
+            'namepair': namepair,
+            'current_user': list_names[0],
+            'matched_user': list_names[1]
         }
         render_template(self, 'chatpage.html', values)
-    def post(self):
+    def post(self, namepair):
+        list_names = namepair.split("-")
         values = {
-            'messages': messages
+            'messages': messages,
+            'listnames': list_names,
+            'namepair': namepair,
+            'current_user': list_names[0],
+            'matched_user': list_names[1]
         }
         render_template(self, 'chatpage.html', values)
  
 class ChatDisplayHandler(webapp2. RequestHandler):
-    def get(self):
+    def get(self, namepair): #says how name pair must be formatted, name1-name2
+        list_names = namepair.split("-")
+        print list_names[0]
+
         values = {
-            'messages': messages
+            'messages': messages,
+            'listnames': list_names,
+            'namepair': namepair,
+            'current_user': list_names[0],
+            'matched_user': list_names[1]
         }
         render_template(self, 'chat.html', values)
     def post(self):
@@ -172,22 +205,31 @@ class ChatDisplayHandler(webapp2. RequestHandler):
         render_template(self, 'chat.html', values)      
 
 class Message():
-    def __init__(self,timestamp,text):
+    def __init__(self,timestamp,text, sender, recipient):
         self.timestamp = timestamp
         self.text = text
+        self.sender = sender
+        self.recipient = recipient
+
+
 class SendHandler(webapp2.RequestHandler):
     def post(self):
+        user = users.get_current_user()
+        current_user = socialdata.get_user_profile(user.email())
         chat_message = self.request.get('chatmsg')
+        matched_user = self.request.get('matched_user')
+        namepair = current_user.name + '-' + matched_user
+        print "Namepair: " + namepair
         if len(chat_message) > 4000:
             self.response.out.write("That message is too long")
         else:
            timestamp = datetime.datetime.now()
-           message = Message(timestamp,chat_message)
+           message = Message(timestamp, chat_message, current_user.name, matched_user)
            messages.append(message)
            while len(messages ) > 50:
               messages.pop(0)
         
-           self.redirect('/chatpage')
+           self.redirect('/chatpage/' + namepair)
 
 class PrintMessagesHandler(webapp2.RequestHandler):
     def get(self):
@@ -249,36 +291,28 @@ class ImageManipulationHandler(webapp2.RequestHandler):
        self.response.headers['Content-Type'] = 'image/png'
        self.response.out.write(img.execute_transforms(output_encoding=images.JPEG))
 
-class ImageHandler(webapp2.RequestHandler):
+
+class ViewPhotoHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self):
-        values = get_template_parameters()
-
-        image_id=self.request.get('id')
-        my_image = ndb.Key(urlsafe=image_id).get()
-
-        values['image_id'] = image_id
-        values['image_url'] = images.get_serving_url(
-            my_image.image, size=150, crop=True
-        )
-        values['image_name'] = my_image.name
-        values['biography'] = self.request.get('biography')
-        render_template(self, 'chatties_list.html', values)        
-
+        user_id = self.request.get('id')
+        profile = ndb.Key(urlsafe=user_id).get()
+        self.send_blob(profile.profile_pic)
 
 
 app = webapp2.WSGIApplication([
     # ('/profile-list', ProfileListHandler),
     # ('/p/(.*)', ProfileViewHandler),
-    ('/image', ImageHandler),
     ('/img', ImageManipulationHandler),
     ('/chatties-list', ChattiesListHandler),
     ('/profile-save', ProfileSaveHandler),
-    ('/chatdisplay', ChatDisplayHandler),
+    ('/chatdisplay/(.*)', ChatDisplayHandler),#the i-frame for the chatpage
     ('/preferences', PreferencesHandler),
-    ('/chatpage', ChatHandler),
+    ('/chatpage/(.*)', ChatHandler), #the user-interactive chat page
     ('/print',PrintMessagesHandler),
     ('/send',SendHandler),
+    ('/mainpage', MainPageHandler),
     ('/profile-edit', ProfileEditHandler),
     ('/profile-user', UserViewHandler),
+    ('/profilepic', ViewPhotoHandler),
     ('.*', MainHandler) #this maps the root url to the Main Page Handler
 ])

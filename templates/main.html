@@ -21,12 +21,13 @@
                 <button class="button "type="reset" value="Reset">Deselect All </button>
             </form> 
             <div class="box"> 
-                <span class="circle"></span>
-                <button class="chatbtn">Chat</button>
-            </div>
-            <div class="box"> 
-                <span class="circle"></span>
-                <button class="chatbtn">Chat</button>
+                   {% for name, preferences in profiles %}
+                <span class="circle"></span> <h1>{{name}} </h1> <p> {{preferences}} </p>
+                <button class="chatbtn"><a href="/chatpage/{{user_name}}{{name}}">Chat</a></button>
+             {% endfor %}
+        </div >
+     
+    </body>   
                 
             </div>
         </div>
