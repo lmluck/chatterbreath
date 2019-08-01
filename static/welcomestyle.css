@@ -1,17 +1,17 @@
 button {
-  background-color: black; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-font-family: 'Maven Pro', sans-serif;
-font-style: normal;
-font-weight: 300;
-/* margin-right: 90px; */
-width: 300px;
+    background-color: black; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Maven Pro', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    /* margin-right: 90px; */
+    width: 300px;
 
 }
 

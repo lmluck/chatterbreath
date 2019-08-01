@@ -5,27 +5,27 @@
     <body>
         <form id="profile" method='post' action="{{upload_url}}" enctype="multipart/form-data"> 
             <div class: "editor">
-                <h1>Name: </h1><br><input type = "text" name="name" value='{{name}}'><br>
+                <h1>Name </h1>
+                <input type="text" name="name" value='{{name}}'><br>
                 <h1> Upload Profile Picture </h1> 
-                <input type="file" name="profile_picture" accept="image/*">
-                <h1>What neighborhood do you live in?: </h1>
-                    <div class="custom-select">
-                    <select name="neighborhood">
-                        {% for neighborhood in neighborhood_options %}
-                        <label class = 'selector'><option value="{{neighborhood}}" name="neighborhood">{{neighborhood}}</option></label>
-                        {% endfor %}
-                    </select>
-                    </div>
-            <br>
-
-            <div><h1>What do you want to chat about?<h1></div>
+                <input id="file" type="file" name="profile_picture" accept="image/*">
+                <h1>What neighborhood do you live in? </h1>
+                <form>
+                    <select name="neighborhoods" id="dropdown">
+                    {% for neighborhood in neighborhood_options %}
+                    <option>{{neighborhood}}</option>
+                    {% endfor %}
+                    </select> <br>
+                </form >
+                <br>
+                <div><h1>What do you want to chat about?<h1></div>
                 <div class="preferences">
                     {% for preference in preferences %}
                     <label class= "container"><input type="checkbox" value="{{preference}}" name="preferences" {% if preference in userpreferences %}checked{% endif %}>{{preference}}<span class="checkmark"></span></label><br>
                     {% endfor %}
-        <input type="submit" >       
+                    <input type="submit" >       
                 </div>
-        </div >
+            </div >
         </form>
     </body>
 </html>    

@@ -1,27 +1,27 @@
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Maven+Pro:900&display=swap" rel="stylesheet">  
-          <link rel="stylesheet" href="/i/chatpage.css">
-   </head>
+        <link rel="stylesheet" href="/i/chatpage.css">
+    </head>
     <body> 
-        <center>
-        <h1>Chatting with {{other_profile}} </h1>
+    <center>
+    <h1>Chatting with {{other_profile}} </h1>
+    <br>
+
+    <iframe src="/chatdisplay" width="1000" height="300"></iframe>
+
+    <form method="post" action="/send">
         <br>
-        
-    
-        <iframe src="/chatdisplay" width="1000" height="300"></iframe>
-    
-     <form method="post" action="/send">
-     <br>
-            <input type ="text" name ="chatmsg"> <input type="submit">
-        </form>
-        <br>
+        <input type ="text" name ="chatmsg"> 
+        <input type="submit">
+    </form>
+    <br>
     <div id="menu" class="click">
         <br>
-                <a href="/"><button type='submit' id="home-button" value="home" > Home </button></a>
-                <a href="/chatpage"><button > Chat </button> </a>
-                <a href='/profile-edit'><button>  Profile </button> </a>
-         </div> 
-         </center>   
-         </body>   
+        <a href="/"><button type='submit' id="home-button" value="home" > Home </button></a>
+        <a href="/chatpage"><button > Chat </button> </a>
+        <a href='/profile-edit'><button>  Profile </button> </a>
+    </div> 
+    </center>   
+    </body>   
 </html>
