@@ -1,10 +1,15 @@
 import os
 import socialdata
+import logging
 import webapp2
 import datetime
 import neighborhoods
  
+from google.appengine.api import images 
 from google.appengine.api import users 
+from google.appengine.ext import blobstore
+from google.appengine.ext import ndb
+from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext.webapp import template
 
 
@@ -33,8 +38,11 @@ def get_user_email():
 
 def get_template_parameters():
     values = {}
+    email = get_user_email()
     if get_user_email():
         values['logout_url'] = users.create_logout_url('/')
+        values['upload_url'] = blobstore.create_upload_url('/profile-save')
+        values['user'] = email
     else:
         values['login_url'] = users.create_login_url('/')
     return values
@@ -49,13 +57,16 @@ class MainHandler(webapp2.RequestHandler):
                 values['name'] = profile.name
         render_template(self, 'welcome.html', values)
 
-class ProfileSaveHandler (webapp2.RequestHandler):
+class ProfileSaveHandler (blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         email = get_user_email()
         if not email:
             self.redirect('/')
         else:
             error_text = ''
+            upload_files = self.get_uploads()
+            blob_info = upload_files[0]
+            type = blob_info.content_type
             name = self.request.get('name')
             preferences = self.request.get('preferences', allow_multiple=True)
             neighborhood = self. request.get('neighborhood')
@@ -64,19 +75,30 @@ class ProfileSaveHandler (webapp2.RequestHandler):
             print 'Neighborhood: '
             print neighborhood
 
+            values = get_template_parameters()
+            values['name'] = "Joe"
+            if type in ['image/jpeg', 'image/png', 'image/gif', 'image/webp']:
+                name= self.request.get('name')
+                my_image= MyImage()
+                my_image.name = name
+                my_image.user = values['user']
+                my_image.image = blob_info.key()
+                my_image.put()
+                image_id = my_image.key.urlsafe()
+                socialdata.save_profile(email, name, preferences, neighborhood, blob_info.key())
+                self.redirect('/image?id=' + image_id)
+
             if len(name) < 2:
                 error_text += "Name should be at least 2 characters. \n"
             if len(name) > 20:
                 error_text += "Name should be no more than 20 characters. \n"    
             if len(name.split()) > 1:
                 error_text += "Name should not have whitespace. \n"  
-            values = get_template_parameters()
-            values['name'] = "Joe"
             if error_text:
                 values['errormsg'] = error_text
 
             else:
-                socialdata.save_profile(email, name, preferences, neighborhood)
+                socialdata.save_profile(email, name, preferences, neighborhood, blob_info.key())
                 values['successmsg'] = 'Everything worked out fine'
             self.redirect('/profile-edit')
 
@@ -166,13 +188,89 @@ class SendHandler(webapp2.RequestHandler):
               messages.pop(0)
         
            self.redirect('/chatpage')
+
 class PrintMessagesHandler(webapp2.RequestHandler):
     def get(self):
         print messages
 
+class  MyImage(ndb.Model):
+    name= ndb.StringProperty()
+    image = ndb.BlobKeyProperty()
+    user = ndb.StringProperty()
+
+class ImageManipulationHandler(webapp2.RequestHandler):
+      def get(self):
+ 
+       image_id = self.request.get("id")
+       my_image = ndb.Key(urlsafe=image_id).get()
+       blob_key = my_image.image
+       img = images.Image(blob_key=blob_key)
+      
+       print(img)
+ 
+       modified = False
+ 
+       h = self.request.get('height')
+       w = self.request.get('width')
+       fit = False
+ 
+       if self.request.get('fit'):
+           fit = True
+ 
+       if h and w:
+           img.resize(width=int(w), height=int(h), crop_to_fit=fit)
+           modified = True
+ 
+       optimize = self.request.get('opt')
+       if optimize:
+           img.im_feeling_lucky()
+           modified = True
+ 
+       flip = self.request.get('flip')
+       if flip:
+           img.vertical_flip()
+           modified = True
+ 
+       mirror = self.request.get('mirror')
+       if mirror:
+           img.horizontal_flip()
+           modified = True
+ 
+       rotate = self.request.get('rotate')
+       if rotate:
+           img.rotate(int(rotate))
+           modified = True
+ 
+       result = img
+       if modified:
+           result = img.execute_transforms(output_encoding=images.JPEG)
+       print("about to render image")
+       img.im_feeling_lucky()
+       self.response.headers['Content-Type'] = 'image/png'
+       self.response.out.write(img.execute_transforms(output_encoding=images.JPEG))
+
+class ImageHandler(webapp2.RequestHandler):
+    def get(self):
+        values = get_template_parameters()
+
+        image_id=self.request.get('id')
+        my_image = ndb.Key(urlsafe=image_id).get()
+
+        values['image_id'] = image_id
+        values['image_url'] = images.get_serving_url(
+            my_image.image, size=150, crop=True
+        )
+        values['image_name'] = my_image.name
+        values['biography'] = self.request.get('biography')
+        render_template(self, 'chatties_list.html', values)        
+
+
+
 app = webapp2.WSGIApplication([
     # ('/profile-list', ProfileListHandler),
     # ('/p/(.*)', ProfileViewHandler),
+    ('/image', ImageHandler),
+    ('/img', ImageManipulationHandler),
     ('/chatties-list', ChattiesListHandler),
     ('/profile-save', ProfileSaveHandler),
     ('/chatdisplay', ChatDisplayHandler),

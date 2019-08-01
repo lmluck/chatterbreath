@@ -3,9 +3,11 @@
         <link rel="stylesheet" href="/i/profile-edit.css">
     </head>
     <body>
-        <form id="profile" method='post' action="/profile-save"> 
+        <form id="profile" method='post' action="{{upload_url}}" enctype="multipart/form-data"> 
             <div class: "editor">
                 <h1>Name: </h1><br><input type = "text" name="name" value='{{name}}'><br>
+                <h1> Upload Profile Picture </h1> 
+                <input type="file" name="profile_picture" accept="image/*">
                 <h1>What neighborhood do you live in?: </h1>
                     <div class="custom-select">
                     <select name="neighborhood">
@@ -15,6 +17,7 @@
                     </select>
                     </div>
             <br>
+
             <div><h1>What do you want to chat about?<h1></div>
                 <div class="preferences">
                     {% for preference in preferences %}

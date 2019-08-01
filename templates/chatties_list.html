@@ -5,12 +5,25 @@
     <body>
                 <h1> Your Chatties </h1>
                 <div class="preferences">
-                    {% for name, preferences in profiles %}
+                    <!-- {% for name, preferences in profiles %}
                     <p>{{name}} : {{preferences}} </p>
                     {% endfor %}
         <input type="submit" >       
                 </div>
         </div >
      
-    </body>
+    </body> -->
 </html>    
+{% if preferences %}
+{% for name, preferences in profiles %}
+<div class="card">
+  <img src="{{image_url}}" alt="{{name}}" style="width:100%">
+  <h1>{{name}} </h1>
+  <p>{{preferences}}</p>
+  <div style="margin: 24px 0;">
+    <a href="/chatpage"><i class="fa fa-dribbble"></i></a> 
+  </div>
+   {% endfor %}
+   {% else %}
+   <h1> You have no friends, dawg </h1>
+</div>

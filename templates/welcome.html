@@ -6,7 +6,7 @@
         <body>
              <center>
                  
-            <img src='/i/logo.png' alt=logo>
+            <img src='/i/logo.png' alt=logo width=100% height="100%">
                 <div id="menu" class="click">
                 <a href="/profile-register"><button type='submit' id="home-button" value="home" > Register </button></a>
                 {% if logout_url == null %}
@@ -15,7 +15,7 @@
                 <a href='{{logout_url}}'><button>Logout </button></a>
                 <a href='/profile-edit'><button> Edit Profile </button> </a>
                     {% endif %}
-                <a href="/profile-register"><button type='submit' id="chatties-button" value="chatties" > Chatties </button></a>    
+                <a href="/chatties-list"><button type='submit' id="chatties-button" value="chatties" > Chatties </button></a>    
          </div>
          {% if successmsg %}
          <div id="successmsg">{{successmsg}}</div>

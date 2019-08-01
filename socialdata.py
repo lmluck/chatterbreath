@@ -1,17 +1,19 @@
 from socialmodels import UserProfile
 
-def save_profile(email, name, preferences, neighborhood):
+def save_profile(email, name, preferences, neighborhood, profile_pic):
     p = get_user_profile(email)
     if p:
         p.name = name
+        p.profile_pic = profile_pic
         if preferences:
             p.preferences = preferences
         if neighborhood:
             p.neighborhood = neighborhood
+
         else:
             p.preferences = []
     else:
-        p = UserProfile(email=email, name=name, preferences=preferences, neighborhood= neighborhood)
+        p = UserProfile(email=email, name=name, preferences=preferences, neighborhood= neighborhood, profile_pic= profile_pic)
     p.put()
 
 def get_user_preferences(email): #ask if thisll work
