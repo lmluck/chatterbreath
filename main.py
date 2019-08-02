@@ -100,7 +100,7 @@ class ProfileSaveHandler (blobstore_handlers.BlobstoreUploadHandler):
             else:
                 socialdata.save_profile(email, name, preferences, neighborhood, blob_info.key())
                 values['successmsg'] = 'Everything worked out fine'
-            self.redirect('/profile-edit')
+            self.redirect('/')
 
 class ProfileEditHandler(webapp2.RequestHandler):
    def get(self):
@@ -132,7 +132,7 @@ class ChattiesListHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         current_user = socialdata.get_user_profile(user.email())
         values['profiles'] = profiles
-        values['name'] = current_user.name
+        values['neighborhood'] = profiles[0].neighborhood
         render_template(self, 'chatties_list.html', values)
 
 class PreferencesHandler(webapp2.RequestHandler):

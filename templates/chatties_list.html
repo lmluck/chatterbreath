@@ -1,25 +1,57 @@
 <html>
     <head>
-        <link rel="stylesheet" href="/i/profile-edit.css">
+        <link rel="stylesheet" href="/i/chatties_list.css">
+         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     <body>
-                <h1> Your Chatties </h1>
+                <div class= "w3-top">
+        <div class= "w3-bar">    
+        <div class="header">
+  <a href="/main" class="logo">Chatter</a>
+  <div class="header-right">
+    <a class="active" href="/main">Home</a>
+    <a href="/chatpage">Chat</a>
+    <a href="/profile-edit">Profile</a>
+  </div> 
+  </div>
+  </div>
+  </div>
+  <br><br>
+                <h1> Your {{neighborhood}} Chatties </h1>
         </div >
      
   
-  
-<div class="card">
+<!--  
+<div class="card"> -->
   {% for profile in profiles %}
-  <img width="100vw" src="/profilepic?id={{profile.key.urlsafe}}" alt="{{profile.name}}">
+  
+ <div class="w3-card-4" style="width:70%">
+  <header class="w3-container w3-black w3-text-white">
   <h1>{{profile.name}} </h1>
-  <p>{{profile.preferences}}</p>
-        
+  </header>
+   <div class="w3-container">
+      <p>Someone to talk to!</p>
+      <hr id="divider">
+  <div> <img src="/profilepic?id={{profile.key.urlsafe}}" alt="{{profile.name}}" class="w3-left w3-circle w3-margin-right" style="width:250px; height:200px">  </div>
+ {% for preference in profile.preferences %} <p>{{preference}}</p> {% endfor %}
+
+ 
+ <div id='space'>
+     <br>
+     </div>  
+     <hr id="divider">
   <div style="margin: 24px 0;">
-    <a href="/chatpage"><i class="fa fa-dribbble"></i></a> 
-    <button class="chatbtn"><a href='/chatpage/{{name}}-{{profile.name}}'>Chat</a></button>
+    <a href="/chatpage"><i class="fa fa-dribbble"></i></a>
+    <button id="chatbutton" class="w3-button w3-block"><a href='/chatpage/{{name}}-{{profile.name}}'>Chat</a></button>
   </div>
+  </div>
+</div>
+<br>
    {% endfor %}
    <!-- <h1> You have no friends, dawg </h1> -->
+   <!-- class="chatbtn" --> 
+<!-- </div> -->
+</div>
 </div>
   </body>
-</html>  
+</html> 

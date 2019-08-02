@@ -167,3 +167,17 @@ font-weight: 300;
 .header-right {
   float: right;
 }
+
+#divider {
+  border-top: 2px solid black;
+  /* top: 17%; */
+  border-radius: 50px;
+}
+
+#chatbutton  {
+    background-color: #FF70CB;
+}
+
+#space  {
+    height: 5px;
+}

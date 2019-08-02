@@ -2,20 +2,33 @@
     <head>
         <link rel="stylesheet" href="/i/welcomestyle.css">
   <link href="https://fonts.googleapis.com/css?family=Maven+Pro:900&display=swap" rel="stylesheet">  
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         </head>
+        <div class= "w3-top">
+        <div class= "w3-bar">    
+        <div class="header">
+  <a href="/main" class="logo">Chatter</a>
+  <div class="header-right">
+    <a class="active" href="/main">Your neighborhood of conversation</a>
+    
+  </div> 
+  </div> 
+  </div>
+  </div>
         <body>
              <center>
                  
-            <img src='/i/logo.png' alt=logo width=100% height="100%">
+            <img class="logo" src='/i/logo.png' alt=logo width="100vw" >
                 <div id="menu" class="click">
-                <a href="/profile-register"><button type='submit' id="home-button" value="home" > Register </button></a>
                 {% if logout_url == null %}
+                 <a href="/profile-register"><button type='submit' id="home-button" value="home" > Register </button></a>
                 <a href="{{login_url}}"><button > Login </button> </a>
                    {% else %}
                 <a href='{{logout_url}}'><button>Logout </button></a>
                 <a href='/profile-edit'><button> Edit Profile </button> </a>
+             <a href="/chatties-list"><button type='submit' id="chatties-button" value="chatties" > Chatties </button></a>  
                     {% endif %}
-                <a href="/chatties-list"><button type='submit' id="chatties-button" value="chatties" > Chatties </button></a>    
+                
          </div>
          {% if successmsg %}
          <div id="successmsg">{{successmsg}}</div>
