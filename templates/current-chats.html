@@ -1,5 +1,6 @@
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro:900&display=swap" rel="stylesheet">  
     <link rel="stylesheet" href="../static/current-chats-style.css">
 </head>
 <body>
@@ -13,10 +14,12 @@
   </div>
   </div>
     <br><br><br><br><br><h1>Current Chats</h1>
-    <a href="{{match1}}"><button> Match1 </button> </a><br>
-    <a href="{{match2}}"><button > Match2 </button> </a><br>
-   <a href="{{match3}}"><button > Match3</button> </a><br>
-    <a href="{{match4}}"><button > Match4 </button> </a><br>
+    <div id="matches">
+    <a href="{{match1}}"><button id = "matches"> Match1 </button> </a><br>
+    <a href="{{match2}}"><button id = "matches"> Match2 </button> </a><br>
+   <a href="{{match3}}"><button id = "matches"> Match3</button> </a><br>
+    <a href="{{match4}}"><button id = "matches"> Match4 </button> </a><br>
+    </div>
     <a href="/"><button id="main" type='submit' id="home-button" value="home" > Home </button></a> 
                 <a href='/profile-edit'><button id="main">  Profile </button> </a>
 </body>

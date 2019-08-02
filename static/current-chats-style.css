@@ -1,3 +1,7 @@
+h1{
+    font-family: 'Maven Pro', sans-serif;
+}
+
 body {
   background-color:#aaff00;
 }
@@ -12,6 +16,9 @@ h3:hover{
 button{
     width:150;
     height:50px;
+}
+#matches{
+    border-radius:11%;
 }
 button:hover{
     background-color:#FF70CB;
